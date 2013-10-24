@@ -1,0 +1,141 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+$	./.tags	/^DatabaseServicePreparedStatement	.\/ch\/ethz\/inf\/asl13\/user40\/DatabaseServicePreparedStatement.java	\/^public class DatabaseServicePreparedStatement implements MessagingService {$\/;"	c$/;"	f	class:DatabaseServicePreparedStatement
+Chatter	./ch/ethz/inf/asl13/user40/client/Chatter.java	/^	private Chatter(String clientID) {$/;"	m	class:Chatter	file:
+Chatter	./ch/ethz/inf/asl13/user40/client/Chatter.java	/^public final class Chatter extends MessagingServiceClient {$/;"	c
+Client	./ch/ethz/inf/asl13/user40/Client.java	/^	public Client() {}$/;"	m	class:Client
+Client	./ch/ethz/inf/asl13/user40/Client.java	/^	public Client(String s) {$/;"	m	class:Client
+Client	./ch/ethz/inf/asl13/user40/Client.java	/^public class Client {$/;"	c
+DatabaseServicePreparedStatement	./.tags	/^DatabaseServicePreparedStatement	.\/ch\/ethz\/inf\/asl13\/user40\/DatabaseServicePreparedStatement.java	\/^public class DatabaseServicePreparedStatement implements MessagingService {$\/;"	c$/;"	c
+DatabaseServicePreparedStatement	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^public class DatabaseServicePreparedStatement implements MessagingService {$/;"	c
+Dictator	./ch/ethz/inf/asl13/user40/client/Dictator.java	/^	private Dictator(String clientID) {$/;"	m	class:Dictator	file:
+Dictator	./ch/ethz/inf/asl13/user40/client/Dictator.java	/^public final class Dictator extends MessagingServiceClient {$/;"	c
+Function	./ch/ethz/inf/asl13/user40/util/Function.java	/^public interface Function<T> {$/;"	i
+MESSAGES_TO_LOG	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	private static final int MESSAGES_TO_LOG = 100;$/;"	f	class:RequestTracer	file:
+MESSAGE_PASSER_QUEUE	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	private static final int MESSAGE_PASSER_QUEUE = 2;$/;"	f	class:MessagePasser	file:
+MainFrame	./ch/ethz/inf/asl13/user40/client/MainFrame.java	/^	public MainFrame() {$/;"	m	class:MainFrame
+MainFrame	./ch/ethz/inf/asl13/user40/client/MainFrame.java	/^public class MainFrame extends JFrame {$/;"	c
+Message	./ch/ethz/inf/asl13/user40/Message.java	/^	public Message() {}$/;"	m	class:Message
+Message	./ch/ethz/inf/asl13/user40/Message.java	/^	public Message(String text) {$/;"	m	class:Message
+Message	./ch/ethz/inf/asl13/user40/Message.java	/^	public Message(String text, int priority, int queueId) {$/;"	m	class:Message
+Message	./ch/ethz/inf/asl13/user40/Message.java	/^public class Message {$/;"	c
+MessagePasser	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	private MessagePasser(String clientID) {$/;"	m	class:MessagePasser	file:
+MessagePasser	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^public final class MessagePasser extends MessagingServiceClient {$/;"	c
+MessagingService	./ch/ethz/inf/asl13/user40/MessagingService.java	/^public interface MessagingService {$/;"	i
+MessagingServiceClient	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	public MessagingServiceClient(String clientID, int queueId) {$/;"	m	class:MessagingServiceClient
+MessagingServiceClient	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^public class MessagingServiceClient {$/;"	c
+MessagingServiceImpl	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^public class MessagingServiceImpl implements MessagingService {$/;"	c
+NAMESPACE	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	public final static String NAMESPACE = "http:\/\/service.user40.asl13.inf.ethz.ch\/";$/;"	f	interface:MessagingService
+PORT_NAME	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	public final static String PORT_NAME = "MessagingServicePort";$/;"	f	interface:MessagingService
+REQUEST_QUEUE	./ch/ethz/inf/asl13/user40/client/Worker.java	/^	public static final int REQUEST_QUEUE = 56;$/;"	f	class:Worker
+RESULT_QUEUE	./ch/ethz/inf/asl13/user40/client/Worker.java	/^	public static final int RESULT_QUEUE = REQUEST_QUEUE + 1;$/;"	f	class:Worker
+RequestTracer	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public RequestTracer(MessagingService service) {$/;"	m	class:RequestTracer
+RequestTracer	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^public final class RequestTracer implements MessagingService {$/;"	c
+SERVICE_NAME	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	public final static String SERVICE_NAME = "MessagingService";$/;"	f	interface:MessagingService
+SERVICE_URL_KEY	./ch/ethz/inf/asl13/user40/server/Server.java	/^	public static final String SERVICE_URL_KEY = "service.url";$/;"	f	class:Server
+Server	./ch/ethz/inf/asl13/user40/server/Server.java	/^public class Server {$/;"	c
+Stopwatch	./ch/ethz/inf/asl13/user40/util/Stopwatch.java	/^public class Stopwatch {$/;"	c
+Worker	./ch/ethz/inf/asl13/user40/client/Worker.java	/^	private Worker(String clientID) {$/;"	m	class:Worker	file:
+Worker	./ch/ethz/inf/asl13/user40/client/Worker.java	/^public final class Worker extends MessagingServiceClient {$/;"	c
+beforeSendingMessage	./ch/ethz/inf/asl13/user40/client/Dictator.java	/^	protected void beforeSendingMessage(Message message) {$/;"	m	class:Dictator
+beforeSendingMessage	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	protected void beforeSendingMessage(Message message) {$/;"	m	class:MessagePasser
+beforeSendingMessage	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	protected void beforeSendingMessage(Message message) {}$/;"	m	class:MessagingServiceClient
+beforeSendingMessage	./ch/ethz/inf/asl13/user40/client/Worker.java	/^	protected void beforeSendingMessage(Message message) {$/;"	m	class:Worker
+both	./ch/ethz/inf/asl13/user40/package.html	/^Contains common components that are (ore may be) used by both,$/;"	typedefs
+canReceive	./ch/ethz/inf/asl13/user40/Client.java	/^	public boolean canReceive;$/;"	f	class:Client
+canSend	./ch/ethz/inf/asl13/user40/Client.java	/^	public boolean canSend;$/;"	f	class:Client
+ch.ethz.inf.asl13.user40	./ch/ethz/inf/asl13/user40/Client.java	/^package ch.ethz.inf.asl13.user40;$/;"	p
+ch.ethz.inf.asl13.user40	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^package ch.ethz.inf.asl13.user40;$/;"	p
+ch.ethz.inf.asl13.user40	./ch/ethz/inf/asl13/user40/Message.java	/^package ch.ethz.inf.asl13.user40;$/;"	p
+ch.ethz.inf.asl13.user40	./ch/ethz/inf/asl13/user40/MessagingService.java	/^package ch.ethz.inf.asl13.user40;$/;"	p
+ch.ethz.inf.asl13.user40.client	./ch/ethz/inf/asl13/user40/client/Chatter.java	/^package ch.ethz.inf.asl13.user40.client;$/;"	p
+ch.ethz.inf.asl13.user40.client	./ch/ethz/inf/asl13/user40/client/Dictator.java	/^package ch.ethz.inf.asl13.user40.client;$/;"	p
+ch.ethz.inf.asl13.user40.client	./ch/ethz/inf/asl13/user40/client/MainFrame.java	/^package ch.ethz.inf.asl13.user40.client;$/;"	p
+ch.ethz.inf.asl13.user40.client	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^package ch.ethz.inf.asl13.user40.client;$/;"	p
+ch.ethz.inf.asl13.user40.client	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^package ch.ethz.inf.asl13.user40.client;$/;"	p
+ch.ethz.inf.asl13.user40.client	./ch/ethz/inf/asl13/user40/client/Worker.java	/^package ch.ethz.inf.asl13.user40.client;$/;"	p
+ch.ethz.inf.asl13.user40.server	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^package ch.ethz.inf.asl13.user40.server;$/;"	p
+ch.ethz.inf.asl13.user40.server	./ch/ethz/inf/asl13/user40/server/Server.java	/^package ch.ethz.inf.asl13.user40.server;$/;"	p
+ch.ethz.inf.asl13.user40.util	./ch/ethz/inf/asl13/user40/util/Function.java	/^package ch.ethz.inf.asl13.user40.util;$/;"	p
+ch.ethz.inf.asl13.user40.util	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^package ch.ethz.inf.asl13.user40.util;$/;"	p
+ch.ethz.inf.asl13.user40.util	./ch/ethz/inf/asl13/user40/util/Stopwatch.java	/^package ch.ethz.inf.asl13.user40.util;$/;"	p
+client	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	private final Client client;$/;"	f	class:MessagingServiceClient	file:
+clients	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	private final List<Client> clients = new ArrayList<Client>();$/;"	f	class:MessagePasser	file:
+commandText	./ch/ethz/inf/asl13/user40/client/Dictator.java	/^	private final String commandText;$/;"	f	class:Dictator	file:
+createMessage	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	public Message createMessage() {$/;"	m	class:MessagingServiceClient
+createQueue	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    public int createQueue() {$/;"	m	class:DatabaseServicePreparedStatement
+createQueue	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	int createQueue();$/;"	m	interface:MessagingService
+createQueue	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	public int createQueue() {$/;"	m	class:MessagingServiceImpl
+createQueue	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public int createQueue() {$/;"	m	class:RequestTracer
+deleteQueue	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    public void deleteQueue(int queue) {$/;"	m	class:DatabaseServicePreparedStatement
+deleteQueue	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	void deleteQueue(int queue);$/;"	m	interface:MessagingService
+deleteQueue	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	public void deleteQueue(int queue) {$/;"	m	class:MessagingServiceImpl
+deleteQueue	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public void deleteQueue(final int queue) {$/;"	m	class:RequestTracer
+execute	./ch/ethz/inf/asl13/user40/util/Function.java	/^	T execute();$/;"	m	interface:Function
+format	./.tags	/^!_TAG_FILE_FORMAT	2	\/extended format; --format=1 will not append ;" to lines\/$/;"	typedefs
+getClient	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	public Client getClient() {$/;"	m	class:MessagingServiceClient
+getConnection	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    private Connection getConnection() {$/;"	m	class:DatabaseServicePreparedStatement	file:
+getFirstMessage	./.tags	/^getFirstMessage	.\/ch\/ethz\/inf\/asl13\/user40\/DatabaseServicePreparedStatement.java	\/^    public Message getFirstMessage(int queue, Client sender, boolean remove) {$\/;"	m	class:DatabaseServicePreparedStatement$/;"	m	class:DatabaseServicePreparedStatement
+getFirstMessage	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    public Message getFirstMessage(int queue, Client sender, boolean remove) {$/;"	m	class:DatabaseServicePreparedStatement
+getFirstMessage	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	Message getFirstMessage(int queue, Client sender, boolean remove);$/;"	m	interface:MessagingService
+getFirstMessage	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	public Message getFirstMessage(int queue, Client sender, boolean remove) {$/;"	m	class:MessagingServiceImpl
+getFirstMessage	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public Message getFirstMessage(final int queue, final Client sender, final boolean remove) {$/;"	m	class:RequestTracer
+getMessageOfHighestPriority	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    public Message getMessageOfHighestPriority(int queue, Client sender, boolean remove) {$/;"	m	class:DatabaseServicePreparedStatement
+getMessageOfHighestPriority	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	Message getMessageOfHighestPriority(int queue, Client sender, boolean remove);$/;"	m	interface:MessagingService
+getMessageOfHighestPriority	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	public Message getMessageOfHighestPriority(int queue, Client sender, boolean remove) {$/;"	m	class:MessagingServiceImpl
+getMessageOfHighestPriority	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public Message getMessageOfHighestPriority(final int queue, final Client sender, final boolean remove) {$/;"	m	class:RequestTracer
+getNextRandomClient	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	private Client getNextRandomClient() {$/;"	m	class:MessagePasser	file:
+getPort	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	public static MessagingService getPort() {$/;"	m	class:MessagingServiceClient
+getServiceUrl	./ch/ethz/inf/asl13/user40/server/Server.java	/^	public static String getServiceUrl() {$/;"	m	class:Server
+id	./ch/ethz/inf/asl13/user40/Client.java	/^	public int id;$/;"	f	class:Client
+insertCount	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	private final AtomicLong insertCount = new AtomicLong();$/;"	f	class:RequestTracer	file:
+insertMessage	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    public void insertMessage(Message message) {$/;"	m	class:DatabaseServicePreparedStatement
+insertMessage	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	void insertMessage(Message message);$/;"	m	interface:MessagingService
+insertMessage	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	public void insertMessage(Message message) {$/;"	m	class:MessagingServiceImpl
+insertMessage	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public void insertMessage(final Message message) {$/;"	m	class:RequestTracer
+isNullMessage	./ch/ethz/inf/asl13/user40/Message.java	/^	public boolean isNullMessage() {$/;"	m	class:Message
+listQueues	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    public int[] listQueues() {$/;"	m	class:DatabaseServicePreparedStatement
+listQueues	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	int[] listQueues();$/;"	m	interface:MessagingService
+listQueues	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	public int[] listQueues() {$/;"	m	class:MessagingServiceImpl
+listQueues	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public int[] listQueues() {$/;"	m	class:RequestTracer
+listQueuesWithWaitingMessages	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    public int[] listQueuesWithWaitingMessages(Client client) {$/;"	m	class:DatabaseServicePreparedStatement
+listQueuesWithWaitingMessages	./ch/ethz/inf/asl13/user40/MessagingService.java	/^	int[] listQueuesWithWaitingMessages(Client client);$/;"	m	interface:MessagingService
+listQueuesWithWaitingMessages	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	public int[] listQueuesWithWaitingMessages(Client client) {$/;"	m	class:MessagingServiceImpl
+listQueuesWithWaitingMessages	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	public int[] listQueuesWithWaitingMessages(final Client client) {$/;"	m	class:RequestTracer
+log	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	private void log(Message message)$/;"	m	class:RequestTracer	file:
+logger	./ch/ethz/inf/asl13/user40/server/Server.java	/^	private static final Logger logger = Logger.getLogger(Server.class.getName());$/;"	f	class:Server	file:
+logger	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	private static final Logger logger = Logger.getLogger(RequestTracer.class.getName());$/;"	f	class:RequestTracer	file:
+logger	./ch/ethz/inf/asl13/user40/util/Stopwatch.java	/^	private static final Logger logger = Logger.getLogger(Stopwatch.class.getName());$/;"	f	class:Stopwatch	file:
+main	./ch/ethz/inf/asl13/user40/client/Chatter.java	/^	public static void main(String[] args) {$/;"	m	class:Chatter
+main	./ch/ethz/inf/asl13/user40/client/Dictator.java	/^	public static void main(String[] args) {$/;"	m	class:Dictator
+main	./ch/ethz/inf/asl13/user40/client/MainFrame.java	/^	public static void main(String[] args) {$/;"	m	class:MainFrame
+main	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	public static void main(String[] args) {$/;"	m	class:MessagePasser
+main	./ch/ethz/inf/asl13/user40/client/Worker.java	/^	public static void main(String[] args) {$/;"	m	class:Worker
+main	./ch/ethz/inf/asl13/user40/server/Server.java	/^	public static void main(String[] args) {$/;"	m	class:Server
+message	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	private Message message = new Message();$/;"	f	class:MessagePasser	file:
+messageTable	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    private String messageTable = "messages";$/;"	f	class:DatabaseServicePreparedStatement	file:
+messages	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	private final Queue<Message> messages = new ConcurrentLinkedQueue<Message>();$/;"	f	class:MessagingServiceImpl	file:
+messagingService	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	private final MessagingService messagingService = getPort();$/;"	f	class:MessagingServiceClient	file:
+onMacOSX	./ch/ethz/inf/asl13/user40/client/MainFrame.java	/^	public static final boolean onMacOSX$/;"	f	class:MainFrame
+priority	./ch/ethz/inf/asl13/user40/Message.java	/^	public int priority;$/;"	f	class:Message
+publish	./ch/ethz/inf/asl13/user40/server/Server.java	/^	public static Endpoint publish(MessagingService service) {$/;"	m	class:Server
+queueId	./ch/ethz/inf/asl13/user40/Message.java	/^	public int queueId;$/;"	f	class:Message
+queueId	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	private final int queueId;$/;"	f	class:MessagingServiceClient	file:
+queueLock	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	private final Object queueLock = new Object();$/;"	f	class:MessagingServiceImpl	file:
+queueTable	./ch/ethz/inf/asl13/user40/DatabaseServicePreparedStatement.java	/^    private String queueTable = "queues";$/;"	f	class:DatabaseServicePreparedStatement	file:
+queues	./ch/ethz/inf/asl13/user40/server/MessagingServiceImpl.java	/^	private int[] queues = new int[0];$/;"	f	class:MessagingServiceImpl	file:
+random	./ch/ethz/inf/asl13/user40/client/MessagePasser.java	/^	private static Random random = new Random();$/;"	f	class:MessagePasser	file:
+receiver	./ch/ethz/inf/asl13/user40/Message.java	/^	public Client receiver;$/;"	f	class:Message
+runAndMeasure	./ch/ethz/inf/asl13/user40/util/Stopwatch.java	/^	public static <T> T runAndMeasure(Function<T> function) {$/;"	m	class:Stopwatch
+sendIfNotNull	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	private void sendIfNotNull(Message message) {$/;"	m	class:MessagingServiceClient	file:
+sendMessagesIndefinitely	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	public void sendMessagesIndefinitely(Message initialMessage) {$/;"	m	class:MessagingServiceClient
+sender	./ch/ethz/inf/asl13/user40/Message.java	/^	public Client sender;$/;"	f	class:Message
+service	./ch/ethz/inf/asl13/user40/util/RequestTracer.java	/^	private final MessagingService service;$/;"	f	class:RequestTracer	file:
+text	./ch/ethz/inf/asl13/user40/Message.java	/^	public String text;$/;"	f	class:Message
+toString	./ch/ethz/inf/asl13/user40/Client.java	/^	public String toString() {$/;"	m	class:Client
+toString	./ch/ethz/inf/asl13/user40/Message.java	/^	public String toString() {$/;"	m	class:Message
+toString	./ch/ethz/inf/asl13/user40/client/MessagingServiceClient.java	/^	public String toString() {$/;"	m	class:MessagingServiceClient
