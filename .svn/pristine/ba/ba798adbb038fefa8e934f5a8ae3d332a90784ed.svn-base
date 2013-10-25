@@ -1,0 +1,24 @@
+package ch.ethz.inf.asl13.user40;
+
+import javax.xml.bind.annotation.*;
+
+/**
+ * Represents a client in the messaging system.
+ */
+@XmlRootElement
+public class Client {
+
+	/** A number that identifies this client in the system. */
+	public int id;
+
+	/** Specifies whether this client is allowed to send messages. */
+	public boolean canSend;
+
+	/** Specifies whether this client is allowed to receive messages. */
+	public boolean canReceive;
+
+	@Override
+	public String toString() {
+		return "Client(" + id + ")";
+	}
+}

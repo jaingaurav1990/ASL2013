@@ -1,0 +1,275 @@
+<?xml version="1.0"?>
+
+<project name="messaging" default="all" basedir=".">
+
+	<property file="build.properties"/>
+	<property file="${user.home}/build.properties"/>
+
+	<property environment="env"/>
+
+	<property name="src" value="${basedir}/src"/>
+
+	<property name="build" value="${basedir}/build"/>
+	<property name="classes" value="${build}/classes"/>
+	<property name="doc" value="${build}/doc"/>
+
+	<property name="test.src" value="${basedir}/test"/>
+	<property name="test.classes" value="${build}/test"/>
+
+	<property name="jdbc.username" value="gjain"/>
+	<property name="jdbc.password" value=""/>
+
+	<!-- Build classpath -->
+	<path id="classpath">
+		<pathelement location="${classes}"/>	
+		<fileset dir="${basedir}/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<property name="build.classpath" refid="classpath"/>
+
+	<target name="prepare">
+
+		<!-- set-up the version number -->
+		<tstamp>
+			<format property="buildno" pattern="yyyyMMdd.HHmm"/>
+		</tstamp>
+		<property name="user" value="${user.name}"/>
+		<property name="version" value="${buildno}-${user}"/>
+
+		<!-- create output directories -->
+		<mkdir dir="${build}"/>
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${test.classes}"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+
+	<target name="all" depends="jar,test,javadoc" description="Builds the application and runs all automated tests."/>
+
+	<target name="create-db" depends="prepare" description="Creates the database; dropping it first if already present.">
+		<!--
+			Note that the DB user must already exist and have appropriate privileges.
+			E.g. create it by running createdb
+			CREATE USER ${jdbc.username} WITH CREATEDB;
+		-->
+		<sql
+			driver="org.postgresql.Driver"
+			classpathref="classpath"
+			url="jdbc:postgresql://127.0.0.1:5432/template1"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			autocommit="true">
+			DROP DATABASE IF EXISTS db;
+			CREATE DATABASE db;
+		</sql>
+		<sql
+			driver="org.postgresql.Driver"
+			classpathref="classpath"
+			url="jdbc:postgresql://127.0.0.1:5432/db"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			src="${basedir}/db/db_setup.sql"
+			autocommit="false"/>
+	</target>
+
+	<target name="compile" depends="prepare" description="Compiles the Java source code.">
+		<javac srcdir="${src}"
+				destdir="${classes}"
+				includeantruntime="false"
+				debug="on"
+				deprecation="on"
+				optimize="off">
+			<classpath refid="classpath"/>
+			<include name="**/*.java" />
+		</javac>
+		<javac srcdir="${test.src}"
+				destdir="${test.classes}"
+				includeantruntime="false"
+				debug="on"
+				deprecation="on"
+				optimize="off">
+			<classpath>
+				<pathelement location="${classes}"/>
+				<path refid="classpath"/>
+			</classpath>
+			<include name="**/*.java" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile" description="Builds the JAR.">
+		<jar jarfile="build/${ant.project.name}.jar">
+			<fileset dir="${classes}">
+				<include name="**/*.class"/>
+			</fileset>
+			<manifest>
+				<attribute name="Main-Class" value="ch.ethz.inf.asl13.user40.middleware.Server"/>
+                <attribute name="Class-Path" value="${basedir}/lib/postgresql-9.2-1003.jdbc4.jar"/>
+				<section name="ch/ethz/inf/asl13/user40/">
+					<attribute name="Implementation-Title" value="${ant.project.name}"/>
+					<attribute name="Implementation-Version" value="${version}"/>
+					<attribute name="Implementation-Vendor" value="ETH"/>
+				</section>				
+			</manifest>
+		</jar>
+	</target>
+
+    
+    <target name="run-simplescenario" depends="run-server-daemon" description="Runs a simple scenario">
+        <antcall target="run-simplesender"/>
+    </target>
+
+    <target name="run-simplesender" depends="run-server-daemon" description="Runs a single sender client">
+        <java classname="ch.ethz.inf.asl13.user40.client.SimpleSender" classpathref="run.classpath" fork="true">
+            <arg line="1 1"/>
+        </java>
+    </target>
+
+    <target name="setup-scenario" depends="jar" description="Create client and queues for scenario in database.">
+        <java classname="ch.ethz.inf.asl13.user40.util.SetupScenario" classpathref="classpath" fork="true"/>
+    </target>
+
+	<target name="run-scenario" depends="run-server-daemon" description="Runs a mix of clients as suggested by the spec.">
+		<parallel>
+			<antcall target="run-messagepasser">
+				<param name="clientID" value="1"/>
+			</antcall>
+			<antcall target="run-messagepasser">
+				<param name="clientID" value="2"/>
+			</antcall>
+			<antcall target="run-messagepasser">
+				<param name="clientID" value="3"/>
+			</antcall>
+			<antcall target="run-chatter">
+				<param name="chatterId" value="201"/>
+				<param name="botId" value="202"/>
+			</antcall>
+			<antcall target="run-chatter">
+				<param name="chatterId" value="211"/>
+				<param name="botId" value="212"/>
+			</antcall>
+			<antcall target="run-dictator-worker">
+				<param name="dictatorId" value="301"/>
+				<param name="workerId" value="311"/>
+			</antcall>
+			<antcall target="run-dictator-worker">
+				<param name="dictatorId" value="301"/>
+				<param name="workerId" value="311"/>
+			</antcall>
+		</parallel>
+	</target>
+
+	<target name="run-server" depends="prepare-run" description="Runs the middleware server.">
+		<java classname="ch.ethz.inf.asl13.user40.middleware.Server" classpathref="run.classpath" fork="true"/>
+	</target>
+
+	<target name="run" depends="run-server-daemon" description="Starts the server and, as soon as it is running, the graphical client for testing.">
+		<java classname="ch.ethz.inf.asl13.user40.client.MainFrame" classpathref="run.classpath" fork="true"/>
+	</target>
+
+	<target name="run-messagepasser" depends="run-server-daemon" description="Runs the message passer.">
+		<java classname="ch.ethz.inf.asl13.user40.client.MessagePasser" classpathref="run.classpath" fork="true">
+			<arg line="${clientID} 1 2 3"/>
+		</java>
+	</target>
+	<target name="run-chatter" depends="run-server-daemon" description="Runs a pair of chatter and chatbot.">
+		<parallel>
+			<java classname="ch.ethz.inf.asl13.user40.client.Chatter" classpathref="run.classpath" fork="true">
+				<arg line="${chatterId}"/>
+			</java>
+			<java classname="ch.ethz.inf.asl13.user40.client.Chatter" classpathref="run.classpath" fork="true">
+				<arg line="${botId} ${chatterId}"/>
+			</java>
+		</parallel>
+	</target>
+
+	<target name="run-dictator-worker" depends="run-server-daemon" description="Runs a pair of dictator and worker clients; one creates work packages that the other processes.">
+		<parallel>
+			<java classname="ch.ethz.inf.asl13.user40.client.Dictator" classpathref="run.classpath" fork="true">
+				<arg line="${dictatorId}"/>
+			</java>
+			<java classname="ch.ethz.inf.asl13.user40.client.Worker" classpathref="run.classpath" fork="true">
+				<arg line="${workerId}"/>
+			</java>
+		</parallel>
+	</target>
+
+	<target name="run-server-daemon" depends="prepare-run" unless="serverrunning">
+		<parallel>
+			<daemons>
+				<antcall target="run-server"/>
+			</daemons>
+			<sequential>
+				<waitfor maxwait="10" maxwaitunit="second" checkevery="500">
+					<http url="http://localhost:9999/messaging"/>
+				</waitfor>
+				<property name="serverrunning" value="1"/>
+			</sequential>
+		</parallel>
+	</target>
+
+	<target name="prepare-run" depends="jar">
+		<path id="run.classpath">
+			<fileset dir="${build}">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+	</target>
+
+	<target name="test" depends="compile" description="Runs the automated (unit) tests.">
+		<junit haltonfailure="on">
+			<classpath>
+				<pathelement location="${test.classes}"/>
+				<pathelement location="${classes}"/>
+				<path refid="classpath"/>
+			</classpath>
+
+			<formatter type="plain" usefile="false"/>
+			<batchtest fork="yes">
+				<fileset dir="${test.src}">
+					<include name="**/*Test*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="javadoc" description="Creates Javadoc API documentation.">
+		<mkdir dir="${doc}"/>
+		<javadoc
+			destdir="${doc}"
+			windowtitle="Messaging System"
+			overview="${src}/overview.html"
+			>
+			<classpath refid="classpath"/>
+			<fileset dir="${src}"/>
+			<link href="http://docs.oracle.com/javase/6/docs/api/"/>
+			<doctitle><![CDATA[<h1>User40's Messaging System]]></doctitle>
+		</javadoc>
+	</target>
+
+	<target name="dist" depends="all, javadoc" description="Creates the zip file to distribute the app.">
+		<property name="zipfile" value="${build}/${name}-${version}.zip"/>
+		<uptodate property="report.ok" srcfile="${ant.project.name}.tex" targetfile="${ant.project.name}.pdf"/>
+		<fail unless="report.ok" message="${ant.project.name}.pdf is outdated. Please run pdflatex again."/>
+		<zip destfile="${zipfile}">
+			<fileset dir="${build}">
+				<include name="*${name}.?ar"/>
+			</fileset>
+			<fileset dir="${basedir}">
+				<include name="build.xml"/>
+				<include name="lib/*"/>
+			</fileset>
+			<zipfileset dir="${doc}" prefix="doc"/>
+			<zipfileset dir="${src}" prefix="src"/>
+			<zipfileset dir="${media}" prefix="media">
+				<include name="**/*.ico"/>
+				<include name="**/*.jpg"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+</project>
+

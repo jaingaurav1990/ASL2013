@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+
+<project name="messaging" default="all" basedir=".">
+
+	<property file="build.properties"/>
+	<property file="${user.home}/build.properties"/>
+
+	<property environment="env"/>
+
+	<property name="src" value="${basedir}/src"/>
+
+	<property name="build" value="${basedir}/build"/>
+	<property name="classes" value="${build}/classes"/>
+	<property name="doc" value="${build}/doc"/>
+
+	<!-- Build classpath -->
+	<path id="classpath">
+		<pathelement location="${classes}"/>	
+		<fileset dir="${basedir}/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<property name="build.classpath" refid="classpath"/>
+
+	<target name="prepare">
+
+		<!-- set-up the version number -->
+		<tstamp>
+			<format property="buildno" pattern="yyyyMMdd.HHmm"/>
+		</tstamp>
+		<property name="user" value="${user.name}"/>
+		<property name="version" value="${buildno}-${user}"/>
+
+		<!-- create output directories -->
+		<mkdir dir="${build}"/>
+		<mkdir dir="${classes}"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+	</target>
+
+	<target name="all" depends="jar" description="Builds the entire application."/>
+
+
+	<target name="compile" depends="prepare" description="Compiles the Java source code.">
+		<javac srcdir="${src}"
+				destdir="${classes}"
+				includeantruntime="false"
+				debug="on"
+				deprecation="on"
+				optimize="off">
+			<classpath refid="classpath"/>
+			<include name="**/*.java" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile" description="Builds the JAR.">
+		<jar jarfile="build/${ant.project.name}.jar">
+			<fileset dir="${classes}">
+				<include name="**/*.class"/>
+			</fileset>
+			<manifest>
+				<attribute name="Main-Class" value="ch.ethz.inf.asl13.user40.server.MessagingServiceImpl"/>
+				<attribute name="Class-Path" value="xxx.jar"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="prepare-run" description="Starts the server and, as soon as it is running, the graphical client for testing.">
+		<parallel>
+			<daemons>
+				<antcall target="run-server"/>
+			</daemons>
+			<sequential>
+				<antcall target="run-client"/>
+			</sequential>
+		</parallel>
+	</target>
+
+	<target name="run-server" depends="prepare-run" description="">
+		<java classname="ch.ethz.inf.asl13.user40.server.MessagingServiceImpl" classpathref="run.classpath" fork="true"/>
+	</target>
+
+	<target name="run-client" depends="waitfor-server" description="">
+		<java classname="ch.ethz.inf.asl13.user40.client.MainFrame" classpathref="run.classpath" fork="true"/>
+	</target>
+
+	<target name="waitfor-server" depends="prepare-run">
+		<waitfor maxwait="10" maxwaitunit="second" checkevery="500">
+			<http url="http://localhost:9999/messaging"/>
+		</waitfor>
+	</target>
+
+	<target name="prepare-run" depends="jar">
+		<path id="run.classpath">
+			<fileset dir="${build}">
+				<include name="*.jar"/>
+			</fileset>
+		</path>
+	</target>
+
+	<target name="deploy" depends="all" description="Deploys the web application.">
+	</target>
+
+	<target name="undeploy" description="Undeploys the application.">
+	</target>
+
+	<target name="javadoc" description="Creates Javadoc API documentation.">
+		<mkdir dir="${doc}"/>
+		<javadoc
+			destdir="${doc}"
+			windowtitle="${ant.project.name}"
+			>
+			<classpath refid="classpath"/>
+			<fileset dir="${src}"/>
+			<doctitle><![CDATA[<h1>${ant.project.name}]]></doctitle>
+		</javadoc>
+	</target>
+
+	<target name="dist" depends="all, javadoc" description="Creates the zip file to distribute the app.">
+		<property name="zipfile" value="${build}/${name}-${version}.zip"/>
+		<uptodate property="report.ok" srcfile="${ant.project.name}.tex" targetfile="${ant.project.name}.pdf"/>
+		<fail unless="report.ok" message="${ant.project.name}.pdf is outdated. Please run pdflatex again."/>
+		<zip destfile="${zipfile}">
+			<fileset dir="${build}">
+				<include name="*${name}.?ar"/>
+			</fileset>
+			<fileset dir="${basedir}">
+				<include name="build.xml"/>
+				<include name="lib/*"/>
+			</fileset>
+			<zipfileset dir="${doc}" prefix="doc"/>
+			<zipfileset dir="${src}" prefix="src"/>
+			<zipfileset dir="${media}" prefix="media">
+				<include name="**/*.ico"/>
+				<include name="**/*.jpg"/>
+			</zipfileset>
+		</zip>
+	</target>
+
+</project>
+

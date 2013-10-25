@@ -1,0 +1,214 @@
+package ch.ethz.inf.asl13.user40;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import ch.ethz.inf.asl13.user40.*;
+
+/**
+ * Abstracts away the Postgresql database
+ * */
+public class DatabaseServicePreparedStatement implements MessagingService {
+
+    @Override
+    public void insertMessage(Message message) {
+        try {
+            Connection con = getConnection();
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            String stm = "INSERT INTO " + messageTable + " values(DEFAULT, ?, ?, ?, ?, ?, ?, now())";
+            pst = con.prepareStatement(stm);
+            pst.setInt(1, message.queueId);
+            pst.setString(2, message.text);
+            pst.setInt(3, message.priority);
+            pst.setInt(4, 0); // Should be actual message type
+            pst.setInt(5, 0); // Should be actual sender id
+            pst.setInt(6, 0); // Should be 0 or actual receiver
+            pst.executeUpdate();
+        }
+         catch (SQLException e) {
+            System.out.println("SQL Exception encountered");
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public Message getFirstMessage(int queue, Client sender, boolean remove) {
+        try {
+           Connection con = getConnection();
+           PreparedStatement pst = null;
+           ResultSet rs = null;
+           String stm = "SELECT msg, pri, qid FROM " + messageTable + " WHERE sender = ? ORDER BY tstamp LIMIT 1";
+           pst = con.prepareStatement(stm);
+           pst.setInt(1, sender.id);
+           rs = pst.executeQuery();
+           if (rs.next()) {
+               Message message = new Message(rs.getString(1), rs.getInt(2), rs.getInt(3));
+               return message;
+           }
+           else {
+              return null;
+           }
+        }
+        catch (SQLException e) {
+           System.out.println("SQL Exception encountered");
+           e.printStackTrace();
+           return null;
+        }
+
+    }
+
+    @Override
+    public Message getMessageOfHighestPriority(int queue, Client sender, boolean remove) {
+        try {
+           Connection con = getConnection();
+           PreparedStatement pst = null;
+           ResultSet rs = null;
+           String stm = "SELECT msg, pri, qid FROM " + messageTable + " WHERE sender = ? ORDER BY pri DESC, tstamp ASC";
+           pst = con.prepareStatement(stm);
+           pst.setInt(1, sender.id);
+           rs = pst.executeQuery();
+           if (rs.next()) {
+               Message message = new Message(rs.getString(1), rs.getInt(2), rs.getInt(3));
+               return message;
+           }
+           else {
+              return null;
+           }
+        }       
+        catch (SQLException e) {
+           System.out.println("SQL Exception encountered");
+           e.printStackTrace();
+           return null;
+        }
+    }
+
+    public int[] listQueues() {
+        try {
+           Connection con = getConnection();
+           PreparedStatement pst = null;
+           ResultSet rs = null;
+           String stm = "SELECT id, COUNT(*) over (partition by 1) FROM " + queueTable;
+           pst = con.prepareStatement(stm);
+           rs = pst.executeQuery();
+           int arraySize = 0;
+           if (rs.next()) {
+              arraySize = rs.getInt(2);
+           }
+           else {
+              int[] queueList = new int[0];
+              return queueList;
+           }
+
+           int[] queueList = new int[arraySize];
+           queueList[0] = rs.getInt(1);
+           int idx = 1;
+           while (rs.next()) {
+               queueList[idx] = rs.getInt(1);
+               idx++;
+           }
+           return queueList;
+        }
+        catch (SQLException e) {
+           System.out.println("SQL Exception encountered");
+           e.printStackTrace();
+           return null;
+        }
+    }
+
+    @Override
+    public int[] listQueuesWithWaitingMessages(Client client) {
+
+        try {
+           Connection con = getConnection();
+           PreparedStatement pst = null;
+           ResultSet rs = null;
+           String stm = "SELECT id, COUNT(*) over (partition by 1) FROM " + messageTable + " WHERE sender = ?";
+           pst = con.prepareStatement(stm);
+           rs = pst.executeQuery();
+           int arraySize = 0;
+           if (rs.next()) {
+               arraySize = rs.getInt(2);
+           }
+           else {
+              int[] queueList = new int[0];
+              return queueList;
+           }
+
+           int[] queueList = new int[arraySize];
+           queueList[0] = rs.getInt(1);
+           int idx = 1;
+           while (rs.next()) {
+               queueList[idx] = rs.getInt(1);
+               idx++;
+           }
+           
+           return queueList;
+        }
+        catch (SQLException e) {
+            System.out.println("SQL Exception encountered");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public int createQueue() {
+        try {
+            Connection con = getConnection();
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            String stm = "INSERT INTO " + queueTable + " values(DEFAULT) RETURNING id"; // Replace the field id
+            pst = con.prepareStatement(stm);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+               return rs.getInt(1);
+            }
+            else {
+               return -1; // Error code ?? 
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("SQL Exception encountered");
+            e.printStackTrace();
+            return -1; // Error code ?? 
+        }
+    }
+
+    @Override
+    public void deleteQueue(int queue) {
+        try {
+            Connection con = getConnection();
+            PreparedStatement pst = null;
+            String stm = "DELETE FROM " + queueTable + " WHERE id = ? ";
+            pst = con.prepareStatement(stm);
+            pst.setInt(1, queue);
+            pst.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("SQL Exception encountered");
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Wrapper over the actual connection to the database
+     */
+    private Connection getConnection() {
+
+        try {
+           return DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/demodb1");
+        }
+        catch (SQLException e) {
+            System.out.println("Connection failed. Check console");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String queueTable = "queues";
+    private String messageTable = "messages";
+}

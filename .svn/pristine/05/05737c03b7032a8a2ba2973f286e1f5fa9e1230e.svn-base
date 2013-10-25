@@ -1,0 +1,31 @@
+package ch.ethz.inf.asl13.user40;
+
+import javax.xml.bind.annotation.*;
+
+/**
+ * Represents a message in the system.
+ */
+@XmlRootElement
+public class Message {
+
+	public String text;
+
+	public int priority;
+
+	public int queueId;
+
+	public Message() {}
+
+	public Message(String text) {
+		this.text = text;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+			"Message for queue %d with priority %d: \"%s\"",
+			queueId,
+			priority,
+			text);
+	}
+}

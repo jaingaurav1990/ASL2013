@@ -1,0 +1,73 @@
+package ch.ethz.inf.asl13.user40.server;
+
+import javax.jws.WebService;
+import javax.xml.ws.Endpoint;
+import ch.ethz.inf.asl13.user40.*;
+
+/**
+ * Implements the messaging service.
+ */
+@WebService(endpointInterface = "ch.ethz.inf.asl13.user40.MessagingService")
+public class MessagingServiceImpl implements MessagingService {
+
+	@Override
+	public void insertMessage(Message message) {
+		System.out.println(message);
+	}
+
+	@Override
+	public Message getFirstMessage(int queue, Client sender, boolean remove) {
+		return null;
+	}
+
+	@Override
+	public Message getMessageOfHighestPriority(int queue, Client sender, boolean remove) {
+		return null;
+	}
+
+	@Override
+	public int[] listQueues() {
+		return new int[]{ 4, 2, 5, 67, 3 };
+	}
+
+	@Override
+	public int[] listQueuesWithWaitingMessages(Client client) {
+		return new int[0];
+	}
+
+	@Override
+	public int createQueue() {
+		return -1;
+	}
+
+	@Override
+	public void deleteQueue(int queue) {
+	}
+
+	/**
+	 * Entry point for the application.
+	 * Creates and publishes the messaging service.
+	 */
+	public static void main(String[] args) {
+		publish();
+	}
+
+	/**
+	 * Creates and publishes a messaging service endpoint at the default address.
+	 * @return The newly created endpoint.
+	 */
+	public static Endpoint publish() {
+		return publish(DEFAULT_SERVICE_URL);
+	}
+
+	/**
+	 * Creates and publishes a messaging service endpoint at the specified address.
+	 * @param address A URI specifying the address and transport/protocol to use.
+	 * @return The newly created endpoint.
+	 */
+	protected static Endpoint publish(String address) {
+		Endpoint endpoint = Endpoint.publish(address, new MessagingServiceImpl());
+		System.out.println("Listening at " + address + "...");
+		return endpoint;
+	}
+}

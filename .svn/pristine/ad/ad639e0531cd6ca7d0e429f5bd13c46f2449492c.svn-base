@@ -1,0 +1,162 @@
+package ch.ethz.inf.asl13.user40;
+
+import java.util.*;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import ch.ethz.inf.asl13.user40.middleware.*;
+import ch.ethz.inf.asl13.user40.util.RequestTracer;
+
+import static org.junit.Assert.*;
+
+@RunWith(Parameterized.class)
+public class MessagingServiceTest {
+
+	public static final int ALL_RECVEIVERS = -1;
+
+	@Parameters(name = "{index}: service={0}")
+	public static Iterable<Object[]> data() {
+		return Arrays.asList(new Object[][] {
+			{ new MemoryMessagingService() },
+			{ new RequestTracer(new MemoryMessagingService()) },
+            { new DatabaseServicePreparedStatement() },
+		});
+	}
+
+	/** Initializes the test with the specified service under test. */
+	public MessagingServiceTest(MessagingService service) {
+		this.service = service;
+	}
+
+	/** The service under test. */
+	private MessagingService service;
+
+	private int q1;
+	private int q2;
+	private int q3;
+
+	public void cleanup() {
+		for (int q : service.listQueues()) {
+			service.deleteQueue(q);
+		}
+	}
+
+	@Before
+	public void initialize() {
+		cleanup();
+
+		// create users
+
+		// create queues
+		q1 = service.createQueue();
+		q2 = service.createQueue();
+		q3 = service.createQueue();
+
+		// create messages
+		insertTestMessage(q1, 2, 7, ALL_RECVEIVERS);
+		insertTestMessage(q1, 3, 7, 3);
+		insertTestMessage(q1, 1, 7, 3);
+
+		insertTestMessage(q2, 2, 7, ALL_RECVEIVERS);
+		insertTestMessage(q2, 3, 7, ALL_RECVEIVERS);
+		insertTestMessage(q2, 1, 7, ALL_RECVEIVERS);
+	}
+
+    
+	@Test
+	public void getFirstMessageFromEmptyQueue() {
+		assertNull(service.getFirstMessage(q3, null, false));
+		assertNull(service.getFirstMessage(q3, null, true));
+	}
+    
+
+	@Test
+	public void listQueues() {
+		assertQueue(q1,q2,q3);
+	}
+
+	@Test
+	public void deleteQueue() {
+		service.deleteQueue(q1);
+		assertQueue(q2, q3);
+	}
+
+	@Test
+	public void deleteNonExistingQueue() {
+		service.deleteQueue(-1);
+		assertQueue(q1, q2, q3);
+	}
+
+	@Test
+	public void createQueue() {
+		assertQueue(q1, q2, q3, service.createQueue());
+	}
+
+	private void insertTestMessage(int queueId, int priority, int senderId, int receiverId) {
+		Message m = new Message();
+		m.text = "TEST MESSAGE";
+		m.queueId = queueId;
+		m.priority = priority;
+		m.sender = createClient(senderId);
+		if (receiverId != ALL_RECVEIVERS) {
+			m.receiver = createClient(senderId);
+		}
+
+		service.insertMessage(m);
+	}
+
+	/*
+	 * Factory method that creates a new client instance using
+	 * the ID's low bits to infer send and receive permissions.
+	 */
+	public static Client createClient(int clientId) {
+		Client c = new Client();
+		c.id = clientId;
+		c.canSend = (clientId & 1) == 1; // infer read permission from lowest bit
+		c.canReceive = (clientId & 2) == 2; // infer write permission
+		return c;
+	}
+
+	/**
+	 * Asserts that the message is considered the <em>null message</em>.
+	 */
+	public static void assertNullMessage(Message message) {
+		assertNotNull(message);
+		assertTrue(message.isNullMessage());
+	}
+
+	/**
+	 * Asserts that the service contains the expected set of queues.
+	 */
+	private void assertQueue(int... expected) {
+		assertArrayElements(expected, service.listQueues());
+	}
+
+	/**
+	 * Asserts that an array is of the expected length and contains all
+	 * expected elements.
+	 * If the <var>expecteds</var> contains no duplicates, this also means
+	 * that the <var>actuals</var> array contains no duplicates, and that
+	 * it contains no other elements that those in <var>expecteds</var>.
+	 */
+	public static void assertArrayElements(int[] expecteds, int[] actuals) {
+		assertNotNull(actuals);
+		assertEquals(expecteds.length, actuals.length);
+		for (int e : expecteds) {
+			assertArrayContains(e, actuals);
+		}
+	}
+
+	/**
+	 * Asserts that an array contains the specified element at least once.
+	 */
+	public static void assertArrayContains(int expected, int... actuals) {
+		for (int x : actuals) {
+			if (x == expected)
+				return;
+		}
+
+		fail("Could not find element " + expected + " in the array.");
+	}
+}

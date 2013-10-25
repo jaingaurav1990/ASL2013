@@ -1,0 +1,17 @@
+all
+compile
+create-db
+dist
+jar
+javadoc
+run
+run-chatter
+run-dictator-worker
+run-messagepasser
+run-scenario
+run-server
+run-simplerscenario
+run-simplescenario
+run-simplesender
+setup-scenario
+test
