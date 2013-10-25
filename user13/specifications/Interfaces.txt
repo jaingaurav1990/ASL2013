@@ -1,0 +1,21 @@
+Intefaces
+
+Tier 1:
+
+Use JDBC to manage connections
+
+Garbage collection
+
+Tier 2 offers the following interface to the clients:
+
+Register()
+int CreateQueue(string name)
+SendMessage(string m, int queue, int reciever=-1)
+SendReqResp(string m, int queue, int context, int receiver=-1)
+string GetMessage(int queue, int context=-1, int receiver=-1)
+string ReadMessage(int queue, int context=-1, bool by_priority=True, int receiver=-1)
+string[] GetQueues(int receiver)
+
+Tier 3:
+
+I just a consumer

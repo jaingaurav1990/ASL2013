@@ -1,0 +1,16 @@
+[Severin Wischmann]
+email = wiseveri@student.ethz.ch
+skype = severin.wischmann
+mobile = +41796915190
+
+[Amrollah Seifoddini]
+email = aseifodd@student.ethz.ch
+email2 = a.seif67@gmail.com
+skype = amrollah.seifoddini
+mobile = +41789207157
+
+Xianghao Xu
+email: xixu@student.ethz.ch
+email2: xxh043@gmail.com
+Skype: Xianghao Xu
+mobile: 0779468529

@@ -1,0 +1,13 @@
+Amrollah:
+
+DB, interface, Experiment Scripts
+
+Severin:
+
+Middleware
+
+Xu:
+
+Client class
+Message class
+convertor class

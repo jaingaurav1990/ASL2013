@@ -1,0 +1,47 @@
+This document specifies the layout of the strings the server accepts.
+>>> denotes the message the client sends.
+<<< denotes the answer one would expect on success.
+
+[User creation]
+To create a user send the following string to the server. It will return
+the id of the new user as a string.
+>>> "register\n"
+<<< "OK\nid:{id|int}"
+
+[Queue manipulation]
+This string creates a queue named {name} and will return the id which represents
+this queue.
+>>>"create\nname:{name|string}"
+<<<"OK\nid:{id|int}
+
+To delete a queue:
+>>>"delete\nid:{id|int}"
+<<<"OK\n"
+
+[Messages]
+To send a message use the following string, context and receiver are optional
+
+>>>"send\nsender:{sender|int};queue:{queue|int,list of int};priority:{priority|int};message:{message|string};context:{context|int};receiver:{receiver|int}"
+
+The following string lets you peek at a message, again the last three arguments are optional and will only be in the answer
+if they are set.
+
+>>>"get\nqueue:{queue|int};context:{context|int};receiver:{receiver|int};by_priority:{by_priority|boolean}"
+<<<"OK\nsender:{sender|int};queue:{queue|int,list of int};priority:{priority|int};message:{message|string};context:{context|int};receiver:{receiver|int}"
+
+The following string consumes a string, again same arguments as before
+
+>>>"read\nqueue:{queue|int};context:{context|int};receiver:{receiver|int};by_priority:{by_priority|boolean}"
+<<<"OK\nsender:{sender|int};queue:{queue|int,list of int};priority:{priority|int};message:{message|string};context:{context|int};receiver:{receiver|int}"
+
+[Queue querying]
+
+To list all queues use the following string
+
+>>>"list\n"
+<<<"OK\nqueues:{queues|list of int}"
+
+To list all queues with messages for a recipient
+
+>>>"list\nreceiver:{receiver}"
+<<<"OK\nqueues:{ids|list of int}"
